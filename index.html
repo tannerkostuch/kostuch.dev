@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tanner Kostuch — Senior Software Engineer</title>
+  <meta name="description" content="Tanner Kostuch, Senior Software Engineer: real-time C++ and Python, Linux automation, AI tooling and DevOps. Projects, skills and contact.">
+  <meta name="author" content="Tanner Kostuch">
+  <link rel="canonical" href="https://kostuch.dev/">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0d0f12" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f4f2ed" media="(prefers-color-scheme: light)">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kostuch.dev/">
+  <meta property="og:title" content="Tanner Kostuch — Senior Software Engineer">
+  <meta property="og:description" content="Real-time C++ and Python, Linux automation, AI tooling and DevOps.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <!--
+    DESIGN BRIEF: "Metallurgical & Systems Spec Sheet"
+    An industrial, high-precision layout inspired by hardware datasheets, kernel documentation, and physical metallurgy.
+    Exposed 1px structural hairlines, tabular monospace telemetry, and a warm carbon-and-copper dark palette (with a crisp
+    archival paper light theme). Pure CSS theme toggle via checkbox hack—zero JavaScript required.
+  -->
+  <style>
+    /* ==========================================================================
+       SELF-HOSTED FONTS (Claude): the same three families Gemini picked, served from this site
+       (no request to Google). SIL Open Font License 1.1, see fonts/OFL.txt
+       ========================================================================== */
+    @font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); }
+    @font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2"); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2"); }
+    @font-face { font-family: 'Space Grotesk'; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/space-grotesk-latin-700-normal.woff2") format("woff2"); }
+
+    /* ==========================================================================
+       DESIGN TOKENS & THEME VARIABLES
+       ========================================================================== */
+    :root {
+      /* Typography */
+      --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+
+      /* Dark Theme (Default: Carbon & Smelted Copper) */
+      --bg-base: #0d0f12;
+      --bg-surface: #13161b;
+      --bg-elevated: #191d24;
+      --bg-glass: rgba(19, 22, 27, 0.85);
+      
+      --text-primary: #eef0f4;
+      --text-secondary: #9ba3b0;
+      --text-muted: #808792;
+
+      --accent-primary: #ff6b35;      /* Molten Alloy Orange */
+      --accent-secondary: #38bdf8;    /* Kernel Telemetry Cyan */
+      --accent-ok: #34d399;           /* Daemon Active Green */
+      --accent-subtle: rgba(255, 107, 53, 0.12);
+      --on-accent: #0d0f12;
+
+      --border-hairline: #232832;
+      --border-strong: #363e4d;
+      --grid-dot: rgba(255, 255, 255, 0.04);
+
+      /* Spacing & Layout */
+      --container-max: 1120px;
+      --gutter: clamp(1rem, 4vw, 2.5rem);
+      --radius-sm: 3px;
+      --transition-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Light Theme (OS Preference) */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-base: #f4f2ed;
+        --bg-surface: #fcfbf9;
+        --bg-elevated: #ece9e1;
+        --bg-glass: rgba(252, 251, 249, 0.88);
+
+        --text-primary: #141619;
+        --text-secondary: #454b54;
+        --text-muted: #626871;
+
+        --accent-primary: #b6380a;    /* High-contrast International Orange (WCAG AA) */
+        --accent-secondary: #0369a1;  /* Deep Technical Blue */
+        --accent-ok: #047857;
+        --accent-subtle: rgba(182, 56, 10, 0.09);
+        --on-accent: #ffffff;
+
+        --border-hairline: #d8d4c8;
+        --border-strong: #b5b0a1;
+        --grid-dot: rgba(0, 0, 0, 0.045);
+      }
+    }
+
+    /* Pure-CSS Manual Theme Override when user toggles checkbox */
+    body:has(#theme-switch:checked) {
+      --bg-base: #f4f2ed;
+      --bg-surface: #fcfbf9;
+      --bg-elevated: #ece9e1;
+      --bg-glass: rgba(252, 251, 249, 0.88);
+
+      --text-primary: #141619;
+      --text-secondary: #454b54;
+      --text-muted: #626871;
+
+      --accent-primary: #b6380a;
+      --accent-secondary: #0369a1;
+      --accent-ok: #047857;
+      --accent-subtle: rgba(182, 56, 10, 0.09);
+      --on-accent: #ffffff;
+
+      --border-hairline: #d8d4c8;
+      --border-strong: #b5b0a1;
+      --grid-dot: rgba(0, 0, 0, 0.045);
+    }
+
+    @media (prefers-color-scheme: light) {
+      body:has(#theme-switch:checked) {
+        --bg-base: #0d0f12;
+        --bg-surface: #13161b;
+        --bg-elevated: #191d24;
+        --bg-glass: rgba(19, 22, 27, 0.85);
+
+        --text-primary: #eef0f4;
+        --text-secondary: #9ba3b0;
+        --text-muted: #808792;
+
+        --accent-primary: #ff6b35;
+        --accent-secondary: #38bdf8;
+        --accent-ok: #34d399;
+        --accent-subtle: rgba(255, 107, 53, 0.12);
+        --on-accent: #0d0f12;
+
+        --border-hairline: #232832;
+        --border-strong: #363e4d;
+        --grid-dot: rgba(255, 255, 255, 0.04);
+      }
+    }
+
+    /* ==========================================================================
+       RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      background-image: 
+        linear-gradient(to right, var(--grid-dot) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-dot) 1px, transparent 1px);
+      background-size: 32px 32px;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 3px;
+    }
+
+    /* ==========================================================================
+       STRUCTURAL SHELL & SYSTEM BAR
+       ========================================================================== */
+    .shell {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    .frame {
+      border-left: 1px solid var(--border-hairline);
+      border-right: 1px solid var(--border-hairline);
+      background-color: var(--bg-base);
+    }
+
+    /* Sticky Top Telemetry Bar */
+    .sys-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background-color: var(--bg-glass);
+      border-bottom: 1px solid var(--border-hairline);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    .sys-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      padding: 0 1.25rem;
+      gap: 1rem;
+    }
+
+    .sys-id {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--text-primary);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-ok);
+      box-shadow: 0 0 8px var(--accent-ok);
+      display: inline-block;
+    }
+
+    .sys-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .sys-nav a {
+      color: var(--text-secondary);
+      transition: color var(--transition-fast);
+    }
+
+    .sys-nav a:hover {
+      color: var(--accent-primary);
+    }
+
+    /* Pure CSS Theme Toggle */
+    #theme-switch {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .theme-btn {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      user-select: none;
+      transition: border-color var(--transition-fast), background-color var(--transition-fast);
+    }
+
+    .theme-btn:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    #theme-switch:focus-visible + .theme-btn {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+
+    /* ==========================================================================
+       SECTION HEADERS (SPEC SHEET DIVIDERS)
+       ========================================================================== */
+    .section-divider {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.85rem 1.25rem;
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-hairline);
+      border-bottom: 1px solid var(--border-hairline);
+      font-family: var(--font-mono);
+    }
+
+    .section-divider h2 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .section-index {
+      color: var(--accent-primary);
+      font-weight: 600;
+    }
+
+    .section-meta {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       HERO: NAME, TITLE, LINKS
+       ========================================================================== */
+    .hero {
+      padding: clamp(2.5rem, 6vw, 4.5rem) 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      position: relative;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        grid-template-columns: 1.35fr 0.65fr;
+        align-items: end;
+        padding: 4rem 2rem;
+      }
+    }
+
+    .hero-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.25rem);
+      font-weight: 700;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-mono);
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title span {
+      color: var(--accent-secondary);
+    }
+
+    .hero-stack-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      list-style: none;
+    }
+
+    .hero-stack-pills li {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+    }
+
+    .hero-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      align-self: stretch;
+      justify-content: flex-end;
+    }
+
+    .action-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-primary);
+      transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+    }
+
+    .action-link:hover {
+      border-color: var(--accent-primary);
+      background-color: var(--bg-elevated);
+      transform: translateX(3px);
+    }
+
+    .action-link .link-label {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.1rem;
+    }
+
+    .action-link .arrow {
+      color: var(--accent-primary);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       01 // ABOUT
+       ========================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 768px) {
+      .about-grid {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+
+    .about-copy {
+      padding: 2rem 1.25rem;
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .about-copy {
+        padding: 2.5rem 2rem;
+        border-right: 1px solid var(--border-hairline);
+      }
+    }
+
+    .about-copy strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .about-telemetry {
+      padding: 2rem 1.25rem;
+      background-color: var(--bg-surface);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.9rem;
+    }
+
+    @media (min-width: 768px) {
+      .about-telemetry {
+        padding: 2.5rem 1.75rem;
+      }
+    }
+
+    .telemetry-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed var(--border-hairline);
+      padding-bottom: 0.45rem;
+      gap: 1rem;
+    }
+
+    .telemetry-key {
+      color: var(--text-muted);
+    }
+
+    .telemetry-val {
+      color: var(--text-primary);
+      text-align: right;
+    }
+
+    /* ==========================================================================
+       02 // PROJECTS (6-CARD SPEC MATRIX)
+       ========================================================================== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      background-color: var(--border-hairline);
+      gap: 1px;
+    }
+
+    @media (min-width: 680px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .project-card {
+      background-color: var(--bg-base);
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.5rem;
+      position: relative;
+      transition: background-color var(--transition-fast);
+    }
+
+    @media (min-width: 768px) {
+      .project-card {
+        padding: 1.75rem;
+      }
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: transparent;
+      transition: background-color var(--transition-fast);
+    }
+
+    .project-card:hover {
+      background-color: var(--bg-surface);
+    }
+
+    .project-card:hover::before {
+      background-color: var(--accent-primary);
+    }
+
+    .card-top {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+    }
+
+    .card-id {
+      color: var(--text-muted);
+    }
+
+    .card-badge {
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-sm);
+      background-color: var(--accent-subtle);
+      color: var(--accent-primary);
+      border: 1px solid var(--accent-primary);
+      font-weight: 500;
+    }
+
+    .card-badge.alt {
+      background-color: transparent;
+      color: var(--accent-secondary);
+      border-color: var(--accent-secondary);
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .card-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-hairline);
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      list-style: none;
+    }
+
+    .tag-list li {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      background-color: var(--bg-elevated);
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-hairline);
+    }
+
+    .card-link {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-weight: 500;
+    }
+
+    .card-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ==========================================================================
+       03 // SKILLS MATRIX
+       ========================================================================== */
+    .skills-matrix {
+      display: grid;
+      grid-template-columns: 1fr;
+      background-color: var(--border-hairline);
+      gap: 1px;
+    }
+
+    @media (min-width: 768px) {
+      .skills-matrix {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .skills-matrix {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .skill-col {
+      background-color: var(--bg-base);
+      padding: 1.5rem 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .skill-col {
+        padding: 1.75rem;
+      }
+    }
+
+    .skill-cat {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-secondary);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .skill-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    .skill-items li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-primary);
+    }
+
+    .skill-items li span.lvl {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       04 // CONTACT & FOOTER
+       ========================================================================== */
+    .contact-block {
+      padding: 2.5rem 1.25rem;
+      background-color: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+       justify-content: space-between;
+    }
+
+    @media (min-width: 768px) {
+      .contact-block {
+        flex-direction: row;
+        align-items: center;
+        padding: 3rem 2rem;
+      }
+    }
+
+    .contact-copy h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-primary);
+    }
+
+    .contact-copy p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      max-width: 48ch;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn-primary, .btn-secondary {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.75rem 1.15rem;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+    }
+
+    .btn-primary {
+      background-color: var(--accent-primary);
+      color: var(--on-accent);
+      border: 1px solid var(--accent-primary);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-secondary);
+      color: var(--accent-secondary);
+      transform: translateY(-1px);
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--border-hairline);
+      padding: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+      background-color: var(--bg-base);
+    }
+
+    @media (max-width: 520px) {
+      .sys-nav {
+        display: none;
+      }
+    }
+
+    /* ==========================================================================
+       CLAUDE'S BUILD ADDITIONS (BUILD_NOTES.md): small phones, anchors under the
+       sticky bar, reduced motion, the cards without a public link, the AI note
+       ========================================================================== */
+    .section-divider {
+      scroll-margin-top: 44px;
+    }
+
+    @media (max-width: 520px) {
+      .section-meta {
+        display: none;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .sys-rev {
+        display: none;
+      }
+    }
+
+    .action-link > div {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .card-note {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .build-note {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border-hairline);
+      background-color: var(--bg-surface);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    @media (min-width: 768px) {
+      .build-note {
+        padding: 1rem 2rem;
+      }
+    }
+
+    .build-note .note-key {
+      color: var(--accent-primary);
+      font-weight: 600;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="shell">
+    <div class="frame">
+
+      <!-- STICKY TELEMETRY HEADER -->
+      <header class="sys-bar">
+        <div class="sys-bar-inner">
+          <div class="sys-id">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>KOSTUCH.DEV<span class="sys-rev"> // REV_2026</span></span>
+          </div>
+          <nav class="sys-nav" aria-label="Sections">
+            <a href="#about">01.About</a>
+            <a href="#projects">02.Projects</a>
+            <a href="#skills">03.Skills</a>
+            <a href="#contact">04.Contact</a>
+          </nav>
+          <div>
+            <input type="checkbox" id="theme-switch" aria-label="Switch between the dark and the light theme">
+            <label for="theme-switch" class="theme-btn" title="Switch between the dark and the light theme">
+              <span aria-hidden="true">&#9680;</span> THEME
+            </label>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- HERO: NAME, TITLE, LINKS -->
+        <section class="hero" aria-label="Introduction">
+          <div>
+            <span class="hero-kicker">Real-Time Systems &amp; Automation</span>
+            <h1 class="hero-name">Tanner Kostuch</h1>
+            <p class="hero-title">
+              Senior Software Engineer <span>// C++ &middot; Python &middot; Bash &middot; Linux &middot; DevOps</span>
+            </p>
+            <ul class="hero-stack-pills" aria-label="Focus areas">
+              <li>Real-time C++</li>
+              <li>Sensor &amp; radio systems</li>
+              <li>ML integration</li>
+              <li>Multi-cloud DevOps</li>
+            </ul>
+          </div>
+
+          <div class="hero-links">
+            <a class="action-link" href="https://github.com/tannerkostuch" target="_blank" rel="noopener noreferrer">
+              <div>
+                <span class="link-label">Source Repositories</span>
+                github.com/tannerkostuch
+              </div>
+              <span class="arrow" aria-hidden="true">-&gt;</span>
+            </a>
+            <a class="action-link" href="https://www.linkedin.com/in/tannerkostuch" target="_blank" rel="noopener noreferrer">
+              <div>
+                <span class="link-label">Work History</span>
+                linkedin.com/in/tannerkostuch
+              </div>
+              <span class="arrow" aria-hidden="true">-&gt;</span>
+            </a>
+            <a class="action-link" href="mailto:tanner@kostuch.dev">
+              <div>
+                <span class="link-label">Direct Electronic Mail</span>
+                tanner@kostuch.dev
+              </div>
+              <span class="arrow" aria-hidden="true">-&gt;</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- 01 // ABOUT -->
+        <div class="section-divider" id="about">
+          <h2><span class="section-index">01</span> // System Profile</h2>
+          <span class="section-meta">ARCH: x86_64-linux-gnu</span>
+        </div>
+
+        <section class="about-grid" aria-label="About Tanner">
+          <div class="about-copy">
+            <p>
+              <strong>Seven years of real-time C++ and Python in defense and aerospace.</strong> I built the back end of
+              a real-time radio transceiver, wired a neural network into a multi-camera thermal-imaging array, worked on
+              GPU-accelerated radar detection, automated a Kubernetes-based DevOps platform across AWS, Azure and
+              OpenStack, and was the sole developer of a satellite-to-ground link simulator.
+            </p>
+            <p>
+              <strong>At home, my Linux desktop is a lab.</strong> AI coding agents that I direct build and run my tools
+              there: an alloy simulator, an automation hub, sandboxed agent machines, and patches for the KDE desktop I
+              use every day. I set the goals, pick what to chase, and review what comes back.
+            </p>
+          </div>
+          <aside class="about-telemetry" aria-label="Quick facts">
+            <div class="telemetry-row">
+              <span class="telemetry-key">EXPERIENCE</span>
+              <span class="telemetry-val">7 years</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">CORE_LANGS</span>
+              <span class="telemetry-val">C++, Python, Java, Bash</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">INFRA_STACK</span>
+              <span class="telemetry-val">K8s, Docker, Terraform</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">PRIMARY_OS</span>
+              <span class="telemetry-val">Linux / KDE Plasma</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">EDUCATION</span>
+              <span class="telemetry-val">B.S. Computer Science</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">BASE</span>
+              <span class="telemetry-val">Minnesota, US</span>
+            </div>
+          </aside>
+        </section>
+
+        <!-- 02 // PROJECTS (6 CARDS) -->
+        <div class="section-divider" id="projects">
+          <h2><span class="section-index">02</span> // Selected Engineering Work</h2>
+          <span class="section-meta">MODULES: 06 LOADED</span>
+        </div>
+
+        <section class="projects-grid" aria-label="Projects">
+          <!-- Card 1: Alloy Discovery Simulator -->
+          <article class="project-card">
+            <div class="card-top">
+              <div class="card-meta">
+                <span class="card-id">PRJ_01 // SIM</span>
+                <span class="card-badge">PUBLIC REPO</span>
+              </div>
+              <h3 class="card-title">Alloy Discovery Simulator</h3>
+              <p class="card-desc">
+                A physics pipeline that hunts for new metal alloys on a desktop PC. A machine-learned interatomic
+                potential (MACE) relaxes atomistic cells and works out stiffness and phase stability for thousands of
+                candidates, then ranks them. Validated against 1,214 known alloys: the right crystal lattice for 99%
+                of those with one right answer, and a 1% median density error.
+              </p>
+            </div>
+            <div class="card-bottom">
+              <ul class="tag-list">
+                <li>Python</li>
+                <li>PyTorch</li>
+                <li>MACE</li>
+                <li>ASE</li>
+                <li>pymatgen</li>
+              </ul>
+              <a class="card-link" href="https://github.com/tannerkostuch/alloy-discovery-simulator" target="_blank" rel="noopener noreferrer">
+                Inspect Repository <span aria-hidden="true">-&gt;</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 2: AutoShell -->
+          <article class="project-card">
+            <div class="card-top">
+              <div class="card-meta">
+                <span class="card-id">PRJ_02 // OPS</span>
+                <span class="card-badge alt">LINUX HUB</span>
+              </div>
+              <h3 class="card-title">AutoShell</h3>
+              <p class="card-desc">
+                The control room of my desktop: a Bash loop and a PySide6 window that run queued jobs and one-shot hooks,
+                pass work to three AI assistants through plain-text pipes, keep a process registry and a cgroup CPU
+                governor, and sync with my second PC through a private Fossil repository.
+              </p>
+            </div>
+            <div class="card-bottom">
+              <ul class="tag-list">
+                <li>Bash</li>
+                <li>Python</li>
+                <li>PySide6 (Qt6)</li>
+                <li>Fossil</li>
+              </ul>
+              <span class="card-note">PRIVATE // RUNS ON MY MACHINES</span>
+            </div>
+          </article>
+
+          <!-- Card 3: Imagination Cores -->
+          <article class="project-card">
+            <div class="card-top">
+              <div class="card-meta">
+                <span class="card-id">PRJ_03 // AI_INFRA</span>
+                <span class="card-badge">CONTAINERIZED</span>
+              </div>
+              <h3 class="card-title">Imagination Cores</h3>
+              <p class="card-desc">
+                Headless AI agents, each in its own rootless Podman container on a dedicated NVMe drive. AutoShell feeds
+                them a prompt queue; every run gets its own log and results, the model is pinned, and updates go in
+                under a lock. The first core's first job: redesign the file structure of the hub it runs in.
+              </p>
+            </div>
+            <div class="card-bottom">
+              <ul class="tag-list">
+                <li>Podman</li>
+                <li>Bash</li>
+                <li>Claude Code</li>
+                <li>Headless Agents</li>
+              </ul>
+              <span class="card-note">PRIVATE // RUNS ON MY MACHINES</span>
+            </div>
+          </article>
+
+          <!-- Card 4: KDE patches -->
+          <article class="project-card">
+            <div class="card-top">
+              <div class="card-meta">
+                <span class="card-id">PRJ_04 // KDE</span>
+                <span class="card-badge alt">PATCHES</span>
+              </div>
+              <h3 class="card-title">KDE Desktop Patches</h3>
+              <p class="card-desc">
+                Two bugs from my own desktop, traced to their source and patched. In KWin's Wayland session, a panel on
+                a smaller monitor clipped the main monitor's work area, so Steam's notifications sat 360 px too high.
+                In bluez-qt, sending several files over Bluetooth crashed the sender (KDE bug 525109).
+              </p>
+            </div>
+            <div class="card-bottom">
+              <ul class="tag-list">
+                <li>C++</li>
+                <li>Qt</li>
+                <li>KWin</li>
+                <li>bluez-qt</li>
+                <li>Wayland</li>
+              </ul>
+              <a class="card-link" href="https://github.com/ValveSoftware/steam-for-linux/issues/12468#issuecomment-6232158610" target="_blank" rel="noopener noreferrer">
+                Write-up + KWin Patch <span aria-hidden="true">-&gt;</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 5: Project Crash -->
+          <article class="project-card">
+            <div class="card-top">
+              <div class="card-meta">
+                <span class="card-id">PRJ_05 // INTERACTIVE</span>
+                <span class="card-badge">GAME_DEV</span>
+              </div>
+              <h3 class="card-title">Project Crash</h3>
+              <p class="card-desc">
+                A 3D mech-combat game in Godot 4, made with other developers: mechs assembled from a data-driven parts
+                catalog, player and AI controllers, and a headless test harness that checks the game without a screen.
+              </p>
+            </div>
+            <div class="card-bottom">
+              <ul class="tag-list">
+                <li>Godot 4</li>
+                <li>GDScript</li>
+                <li>Game AI</li>
+              </ul>
+              <span class="card-note">PRIVATE // TEAM PROJECT</span>
+            </div>
+          </article>
+
+          <!-- Card 6: Stream Assistant for The TANgent -->
+          <article class="project-card">
+            <div class="card-top">
+              <div class="card-meta">
+                <span class="card-id">PRJ_06 // BROADCAST</span>
+                <span class="card-badge alt">THE TANGENT</span>
+              </div>
+              <h3 class="card-title">Stream Assistant</h3>
+              <p class="card-desc">
+                Tools for my Kick channel, The TANgent. It reads chat aloud in an AI voice with a censor in front of it:
+                built-in rules, my own block and allow lists, and a language model that judges each message. Plus a
+                one-click Go Live that starts streaming and recording in OBS.
+              </p>
+            </div>
+            <div class="card-bottom">
+              <ul class="tag-list">
+                <li>Python</li>
+                <li>WebSockets</li>
+                <li>Text-to-Speech</li>
+                <li>OBS</li>
+              </ul>
+              <span class="card-note">PRIVATE // LIVE ON STREAM</span>
+            </div>
+          </article>
+        </section>
+
+        <p class="build-note">
+          <span class="note-key">BUILD_NOTE //</span> The simulator, AutoShell, the Imagination Cores, the KDE patches and
+          the Stream Assistant were written by AI coding agents (Claude, Gemini, Grok) that I direct: I set the goals,
+          choose what to pursue and review the results. Project Crash is AI-assisted.
+        </p>
+
+        <!-- 03 // SKILLS -->
+        <div class="section-divider" id="skills">
+          <h2><span class="section-index">03</span> // Technical Capabilities</h2>
+          <span class="section-meta">BENCHMARK: PRODUCTION</span>
+        </div>
+
+        <section class="skills-matrix" aria-label="Technical skills">
+          <div class="skill-col">
+            <h3 class="skill-cat">Languages</h3>
+            <ul class="skill-items">
+              <li><span>C++</span> <span class="lvl">[7 YRS]</span></li>
+              <li><span>Python</span> <span class="lvl">[7 YRS]</span></li>
+              <li><span>Bash</span> <span class="lvl">[7 YRS]</span></li>
+              <li><span>Java</span> <span class="lvl">[6 YRS]</span></li>
+              <li><span>C# / JavaScript / SQL</span> <span class="lvl">[+]</span></li>
+            </ul>
+          </div>
+
+          <div class="skill-col">
+            <h3 class="skill-cat">Real-Time &amp; ML</h3>
+            <ul class="skill-items">
+              <li><span>Real-time C++</span> <span class="lvl">[RT]</span></li>
+              <li><span>SDR (IQ data)</span> <span class="lvl">[SDR]</span></li>
+              <li><span>GPU radar detection</span> <span class="lvl">[GPU]</span></li>
+              <li><span>Computer vision</span> <span class="lvl">[CV]</span></li>
+              <li><span>PyTorch / TensorFlow</span> <span class="lvl">[ML]</span></li>
+            </ul>
+          </div>
+
+          <div class="skill-col">
+            <h3 class="skill-cat">Cloud &amp; DevOps</h3>
+            <ul class="skill-items">
+              <li><span>Kubernetes</span> <span class="lvl">[K8S]</span></li>
+              <li><span>Docker</span> <span class="lvl">[OCI]</span></li>
+              <li><span>Terraform / Terragrunt</span> <span class="lvl">[IAC]</span></li>
+              <li><span>AWS / Azure / OpenStack</span> <span class="lvl">[CLOUD]</span></li>
+              <li><span>CI/CD pipelines</span> <span class="lvl">[OPS]</span></li>
+            </ul>
+          </div>
+
+          <div class="skill-col">
+            <h3 class="skill-cat">Linux &amp; Tools</h3>
+            <ul class="skill-items">
+              <li><span>RHEL / Debian / Fedora</span> <span class="lvl">[OS]</span></li>
+              <li><span>Qt / PySide6</span> <span class="lvl">[GUI]</span></li>
+              <li><span>RabbitMQ / protobuf</span> <span class="lvl">[IPC]</span></li>
+              <li><span>REST APIs</span> <span class="lvl">[NET]</span></li>
+              <li><span>Git / GCC / GDB</span> <span class="lvl">[DEV]</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 04 // CONTACT -->
+        <div class="section-divider" id="contact">
+          <h2><span class="section-index">04</span> // Transmission &amp; Contact</h2>
+          <span class="section-meta">CHANNEL: OPEN</span>
+        </div>
+
+        <section class="contact-block" aria-label="Contact">
+          <div class="contact-copy">
+            <h3>Want to talk shop?</h3>
+            <p>
+              Email is the quickest way to reach me. The code is on GitHub, and my work history is on LinkedIn.
+            </p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn-primary" href="mailto:tanner@kostuch.dev">
+              <span aria-hidden="true">&#9993;</span> tanner@kostuch.dev
+            </a>
+            <a class="btn-secondary" href="https://github.com/tannerkostuch" target="_blank" rel="noopener noreferrer">
+              GitHub <span aria-hidden="true">-&gt;</span>
+            </a>
+            <a class="btn-secondary" href="https://www.linkedin.com/in/tannerkostuch" target="_blank" rel="noopener noreferrer">
+              LinkedIn <span aria-hidden="true">-&gt;</span>
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="site-footer">
+        <span>TANNER KOSTUCH // SENIOR SOFTWARE ENGINEER</span>
+        <span>NO TRACKERS &middot; ZERO JS &middot; WCAG AA</span>
+      </footer>
+
+    </div>
+  </div>
+
+</body>
+</html>
