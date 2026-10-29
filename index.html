@@ -1037,28 +1037,30 @@
             </div>
           </article>
 
-          <!-- Card 3: Imagination Cores -->
+          <!-- Card 3: Encounter (the dating app; "Encounter" is its working title) — replaced the Imagination Cores card 2026-10-28 -->
           <article class="project-card">
             <div class="card-top">
               <div class="card-meta">
-                <span class="card-id">PRJ_03 // AI_INFRA</span>
-                <span class="card-badge">CONTAINERIZED</span>
+                <span class="card-id">PRJ_03 // MOBILE</span>
+                <span class="card-badge">IN PROGRESS</span>
               </div>
-              <h3 class="card-title">Imagination Cores</h3>
+              <h3 class="card-title">Encounter</h3>
               <p class="card-desc">
-                Headless AI agents, each in its own rootless Podman container on a dedicated NVMe drive. AutoShell feeds
-                them a prompt queue; every run gets its own log and results, the model is pinned, and updates go in
-                under a lock. The first core's first job: redesign the file structure of the hub it runs in.
+                A dating app designed to match people who actually like each other: phones find each other over
+                Bluetooth, compatibility is scored on the phone, and the server holds as close to nothing as possible.
+                Working today on Android and desktop, from one Kotlin codebase: a profile builder with deal-breakers,
+                metadata-stripped photos, and an encrypted profile file, with 160 automated tests.
               </p>
             </div>
             <div class="card-bottom">
               <ul class="tag-list">
-                <li>Podman</li>
-                <li>Bash</li>
+                <li>Kotlin Multiplatform</li>
+                <li>Compose</li>
+                <li>Android</li>
+                <li>AES-256-GCM</li>
                 <li>Claude Code</li>
-                <li>Headless Agents</li>
               </ul>
-              <span class="card-note">PRIVATE // RUNS ON MY MACHINES</span>
+              <span class="card-note">PRIVATE // IN DEVELOPMENT</span>
             </div>
           </article>
 
@@ -1140,7 +1142,7 @@
         </section>
 
         <p class="build-note">
-          <span class="note-key">BUILD_NOTE //</span> The simulator, AutoShell, the Imagination Cores, the KDE patches and
+          <span class="note-key">BUILD_NOTE //</span> The simulator, AutoShell, Encounter, the KDE patches and
           the Stream Assistant were written by AI coding agents (Claude, Gemini, Grok) that I direct: I set the goals,
           choose what to pursue and review the results. Project Crash is AI-assisted.
         </p>
